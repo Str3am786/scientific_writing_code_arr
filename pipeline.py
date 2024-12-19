@@ -1,4 +1,5 @@
 from extraction_amenity import pipeline as extraction_pipeline
+from extraction_sentiment import pipeline as sentiment_pipeline
 
 def pipeline(review_text: str) -> list:
 
@@ -10,11 +11,14 @@ def pipeline(review_text: str) -> list:
     for amenity, contexts in possible_amenities.items():
         for context in contexts:
             #Send to model
-            positive = True
-            if positive:
+            sentiment = sentiment_pipeline(context)
+
+            if not (sentiment == "NEGATIVE"):
                 # The given amenity is positive
                 break
 
         available_amenities.append(amenity)
 
     return available_amenities
+
+
